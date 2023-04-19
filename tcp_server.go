@@ -5,7 +5,8 @@ import (
 	"log"
 	"net"
 	"sync"
-"github.com/Khalelalsam/is105sem03/mycrypt"
+
+	"github.com/Khalelalsam/is105sem03/mycrypt"
 )
 
 func main() {
@@ -38,12 +39,11 @@ func main() {
 						return // fra for løkke
 					}
 
-
-dekryptertMelding := mycrypt.Krypter([]rune(string(buf[:n]))), mycrypt.ALF_SEM03, len(mycrypt.ALF_SEM03)-4)
- log.Println("Dekrypter melding: ", string(dekryptertMelding))
-
-					switch msg := string(dekrypterMelding) {
-  				        case "ping":
+					dekryptertMelding := mycrypt.Krypter([]rune(string(buf[:n])), mycrypt.ALF_SEM03, len(mycrypt.ALF_SEM03)-4)
+					log.Println("Dekrypter melding: ", string(dekryptertMelding))
+					msg := string(dekryptertMelding)
+					switch msg {
+					case "ping":
 						_, err = c.Write([]byte("pong"))
 					default:
 						_, err = c.Write(buf[:n])
