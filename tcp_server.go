@@ -5,8 +5,9 @@ import (
 	"log"
 	"net"
 	"sync"
-
-	"github.com/Khalelalsam/is105sem03/mycrypt"
+        "funtemps/conv"
+        "fmt"
+	
 )
 
 func main() {
@@ -45,6 +46,18 @@ func main() {
 					switch msg {
 					case "ping":
 						_, err = c.Write([]byte("pong"))
+                                        case s := "Kjevik": 
+                                parts := strings.Split(s, ";") 
+                                    if len(parts) < 4 {      
+                                  log.Println("Invalid input message")        
+                                       return     }
+                     t, err := strconv.ParseFloat(strings.TrimSpace(parts[3]), 64)   
+                     if err != nil { 
+                     log.Println(err) }     
+                     f := conv.CelsiusToFahrenheit(t)
+  
+                      response := fmt.Sprintf("%.2f Celsius er %.2f Fahrenheit", t, f)
+                           _, err = c.Write([]byte(response))
 					default:
 						_, err = c.Write(buf[:n])
 					}
