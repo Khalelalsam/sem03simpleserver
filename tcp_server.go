@@ -7,7 +7,9 @@ import (
 	"sync"
         "funtemps/conv"
         "fmt"
-	
+	"github.com/Khalelalsam/is105sem03/mycrypt"
+        "strconv"
+        "strings"
 )
 
 func main() {
@@ -46,8 +48,8 @@ func main() {
 					switch msg {
 					case "ping":
 						_, err = c.Write([]byte("pong"))
-                                        case s := "Kjevik": 
-                                parts := strings.Split(s, ";") 
+                                        case let msg where msg.HasPrefix("Kjevik"): 
+                                  parts := strings.Split(msg, ";") 
                                     if len(parts) < 4 {      
                                   log.Println("Invalid input message")        
                                        return     }
