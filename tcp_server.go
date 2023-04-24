@@ -9,7 +9,12 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+<<<<<<< HEAD
 
+=======
+        "funtemps/conv"
+        "fmt"
+>>>>>>> 2497a97 (ss)
 	"github.com/Khalelalsam/is105sem03/mycrypt"
 )
 
@@ -43,6 +48,7 @@ func main() {
 						return // fra for løkke
 					}
 
+<<<<<<< HEAD
 					dekryptertMelding := mycrypt.Krypter([]rune(string(buf[:n])), mycrypt.ALF_SEM03, len(mycrypt.ALF_SEM03)-4)
 					log.Println("Dekrypter melding: ", string(dekryptertMelding))
 					switch msg := string(dekryptertMelding); msg {
@@ -67,6 +73,31 @@ func main() {
 					default:
 						_, err = c.Write(buf[:n])
 					}
+=======
+					 dekryptertMelding := mycrypt.Krypter([]rune(string(buf[:n])), mycrypt.ALF_SEM03, len(mycrypt.ALF_SEM03)-4)
+                                        log.Println("Dekrypter melding: ", string(dekryptertMelding))
+					switch msg := string(dekryptertMelding); msg {
+					case "ping":
+						_, err = c.Write([]byte("pong"))
+                                          case "Kjevik;SN39040;18.03.2022 01:50;6":
+                                  parts := strings.Split(msg, ";")
+                                    if len(parts) < 4 {
+                                  log.Println("Invalid input message")
+                                       return     }
+                     t, err := strconv.ParseFloat(parts[len(parts)-1], 64)
+                     if err != nil {
+                     log.Println(err) }
+
+  f := conv.CelsiusToFahrenheit(t)
+
+
+                           response:= fmt.Sprintf("Kjevik;SN39040;18.03.2022 01:50;%0.2f", f)
+                           _, err = c.Write([]byte(response))
+
+					default:
+log.Println("Dekrypter melding:---- ", string(dekryptertMelding))
+						_, err = c.Write(buf[:n])					}
+>>>>>>> 2497a97 (ss)
 					if err != nil {
 						if err != io.EOF {
 							log.Println(err)
