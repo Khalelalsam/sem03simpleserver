@@ -1,15 +1,16 @@
 package main
 
 import (
+	"fmt"
+	"funtemps/conv"
 	"io"
 	"log"
 	"net"
+	"strconv"
+	"strings"
 	"sync"
-//        "funtemps/conv"
-        "fmt"
+
 	"github.com/Khalelalsam/is105sem03/mycrypt"
-        "strconv"
-        "strings"
 )
 
 func main() {
@@ -44,26 +45,28 @@ func main() {
 
 					dekryptertMelding := mycrypt.Krypter([]rune(string(buf[:n])), mycrypt.ALF_SEM03, len(mycrypt.ALF_SEM03)-4)
 					log.Println("Dekrypter melding: ", string(dekryptertMelding))
-					msg := string(dekryptertMelding)
-					switch msg {
+					switch msg := string(dekryptertMelding); msg {
+
 					case "ping":
 						_, err = c.Write([]byte("pong"))
-                                        case "Kjevik": 
-                                  parts := strings.Split(msg, ";") 
-                                    if len(parts) < 4 {      
-                                  log.Println("Invalid input message")        
-                                       return     }
-                     t, err := strconv.ParseFloat(parts[len(parts)-1], 64)   
-                     if err != nil { 
-                     log.Println(err) }  
-   
-//                     f := conv.CelsiusToFahrenheit(t)
-  
-                      response :=  fmt.Println(t,"rrx")
-// fmt.Sprintf("%0.2f Celsius er %0.2f Fahrenheit", t, f)
-                           _, err = c.Write([]byte(response))
+					case "Kjevik":
+						parts := strings.Split(msg, ";")
+						if len(parts) < 4 {
+							log.Println("Invalid input message")
+							return
+						}
+						t, err := strconv.ParseFloat(parts[len(parts)-1], 64)
+						if err != nil {
+							log.Println(err)
+						}
+
+						f := conv.CelsiusToFahrenheit(t)
+
+						response := fmt.Sprintf("%0.2f Celsius er %0.2f Fahrenheit", t, f)
+						_, err = c.Write([]byte(response))
 					default:
-						_, err = c.Write(buf[:n])					}
+						_, err = c.Write(buf[:n])
+					}
 					if err != nil {
 						if err != io.EOF {
 							log.Println(err)
