@@ -48,7 +48,10 @@ log.Println("Dekrypter melding: ", string(dekryptertMelding))
 
 switch msg := string(dekryptertMelding); msg {
                                         case "ping":
-                                                _, err = c.Write([]byte("pong"))
+        
+                                             response1 :="pong"
+                                      encryptedResponse := mycrypt.Krypter([]rune(response1), mycrypt.ALF_SEM03, 4)
+    _, err = c.Write([]byte(string(encryptedResponse)))
 
                                                  case "Kjevik;SN39040;18.03.2022 01:50;6":
                                   parts := strings.Split(msg, ";")
